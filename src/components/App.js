@@ -60,8 +60,8 @@ function App() {
   };
 
   const handleGenderInput = (value) => {
-    ls.set('genderInput', value);
     setGenderInput(value);
+    ls.set('genderInput', value);
   }
 
   const handleCityInput = (value) => {
@@ -75,7 +75,6 @@ function App() {
       setClickedCityList(newCityList);
     }
   };
-
   const handleResetBtn = () => {
     setNameInput('');
     setGenderInput('all');

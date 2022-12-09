@@ -1,5 +1,6 @@
 function ResetBtn(props) {
     const handleReset = (ev) => {
+        ev.preventDefault();
         props.handleResetBtn();
     }
   return (
