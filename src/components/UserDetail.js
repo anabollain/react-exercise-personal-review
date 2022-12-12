@@ -3,7 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 function UserDetail(props) {
     const params = useParams ();
     const userFound = props.findUser(params.id);
-
+    console.log(userFound)
+    console.log(params.id)
   return (
     <>
     <article>

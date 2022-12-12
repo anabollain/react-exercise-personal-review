@@ -24,7 +24,7 @@ function App() {
   const [genderInput, setGenderInput] = useState(ls.get('genderInput','all'));
   const [cityList, setCityList] = useState([]);
   const [clickedCityList, setClickedCityList] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   //USE EFFECT
   const compare = (a, b) => {
     if (a < b) {
@@ -38,7 +38,11 @@ function App() {
 
   useEffect(() => {
     callToApi().then((data) => {
+      console.log(data)
       setUserList(data);
+      //Loaded
+      setIsLoading(false);
+      //Array for cities for checkbox filter
       let cities = [];
       for (let eachData of data) {
         const newCity = eachData.city;
@@ -46,10 +50,22 @@ function App() {
           cities = [...cities, newCity];
         }
       }
+      //Order city arrays
       cities.sort(compare);
+      //Set value of state variable sent by props
       setCityList(cities);
     });
   }, []);
+
+  // Class: function to get cities, no variable state
+
+  /*const getCities = () => {
+    const userCities = userList.map((user) => user.city);
+    const uniqueCities = userCities.filter ((city, index) =>{
+      return userCities.indexOf(city) === index;
+    });
+    return uniqueCities;
+  }*/
 
   //EVENT FUNCTIONS
   const handleNameInput = (value) => {
@@ -66,6 +82,14 @@ function App() {
 
   const handleCityInput = (value) => {
     const clickedValue = value.toLowerCase();
+    //Other way of doing the if-else condition with indexOf method
+    /* if (clickedCityList.includes(clickedValue)){
+      const position = clickedCityList.indexOf(value);
+      clickedCityList.splice(position, 1);
+      setClickedCityList([...clickedCityList]);
+    }else{
+      setClickedCityList([...clickedCityList]);
+    }*/
     if (clickedCityList.includes(clickedValue)) {
       const newCityList = clickedCityList.filter((eachCity) =>
         eachCity !== clickedValue);
@@ -74,6 +98,7 @@ function App() {
       const newCityList = [...clickedCityList, clickedValue];
       setClickedCityList(newCityList);
     }
+    
   };
   const handleResetBtn = () => {
     setNameInput('');
@@ -98,11 +123,15 @@ function App() {
     ;
 
     const findUser = (id) => {
+      console.log('entra funcion buscar');
+      console.log(isLoading);
+      console.log(userList)
       return userList.find ((oneUser) =>
       oneUser.id === id);
       };
 
   //RETURN
+  if(isLoading === false){
   return (
     <Routes>
       <Route path='/' element={
@@ -115,6 +144,10 @@ function App() {
       <Route path='/user/:id' element={<UserDetail findUser={findUser}/>}></Route>
     </Routes>
   );
+}else{
+  return (
+  <h1>Loading</h1>);
+}
 }
 
 export default App;
