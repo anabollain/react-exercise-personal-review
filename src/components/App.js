@@ -1,16 +1,15 @@
 import React from 'react';
 //react libraries
 import { useState, useEffect } from 'react';
-//props
-//import PropTypes from 'prop-types';
 //services
 import callToApi from '../services/api';
 import ls from '../services/localStorage';
 //components
-//import data from '../data';
+import Header from './Header';
 import UserList from './UserList';
 import Filters from './Filters';
 import UserDetail from './UserDetail';
+import About from './About';
 //routes
 import {Routes, Route} from 'react-router-dom';
 //styles
@@ -38,7 +37,7 @@ function App() {
 
   useEffect(() => {
     callToApi().then((data) => {
-      console.log(data)
+      
       setUserList(data);
       //Loaded
       setIsLoading(false);
@@ -69,9 +68,6 @@ function App() {
 
   //EVENT FUNCTIONS
   const handleNameInput = (value) => {
-    if(value !== ''){
-      ls.set('nameInput', value);
-    }
     setNameInput(value);
   };
 
@@ -123,26 +119,28 @@ function App() {
     ;
 
     const findUser = (id) => {
-      console.log('entra funcion buscar');
-      console.log(isLoading);
-      console.log(userList)
       return userList.find ((oneUser) =>
-      oneUser.id === id);
+      oneUser.name === id);
       };
 
   //RETURN
   if(isLoading === false){
   return (
-    <Routes>
-      <Route path='/' element={
-        <>
-        <Filters handleNameInput={handleNameInput} nameInput={nameInput} handleGenderInput={handleGenderInput} genderInput={genderInput} userList={userList} cityList={cityList} handleCityInput={handleCityInput} clickedCityList={clickedCityList} handleResetBtn={handleResetBtn} />
-        <UserList userList={filterUserList} />
-        </>
-      }>
-      </Route>
-      <Route path='/user/:id' element={<UserDetail findUser={findUser}/>}></Route>
-    </Routes>
+    <>
+      <Header/>
+      <Routes>
+        <Route path='/' element={
+          <main className='main'>
+            <Filters handleNameInput={handleNameInput} nameInput={nameInput} handleGenderInput={handleGenderInput} genderInput={genderInput} userList={userList} cityList={cityList} handleCityInput={handleCityInput} clickedCityList={clickedCityList} handleResetBtn={handleResetBtn} />
+            <UserList userList={filterUserList} />
+          </main>
+        }>
+        </Route>
+        <Route path='/about' element={<About/>}></Route>
+        <Route path='/user/:id' element={<UserDetail findUser={findUser}/>}></Route>
+
+      </Routes>
+    </>
   );
 }else{
   return (

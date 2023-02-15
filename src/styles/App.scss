@@ -1,3 +1,11 @@
-.title{
-    color: red;
+@import '../styles/core/reset';
+@import '../styles/core/variables';
+
+:root{
+    font-family: $font-familyOpenSans;
+}
+
+.main{
+    display: grid;
+    grid-template-columns: 20% 80%;
 }

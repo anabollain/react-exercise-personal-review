@@ -1,0 +1,8 @@
+.user{
+    width: rem(300);
+    height: rem(200);
+    background-color: green;
+    &__title{
+        font-size: rem(14);
+    }
+}

@@ -1,0 +1,13 @@
+@import './core/functions';
+@import './core/variables';
+
+.header{
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    padding-left: rem(30);
+    background-color: red;
+    &__title{
+        font-size: rem(26);
+    }
+}

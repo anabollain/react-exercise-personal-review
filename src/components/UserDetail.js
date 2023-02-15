@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 function UserDetail(props) {
     const params = useParams ();
     const userFound = props.findUser(params.id);
-    console.log(userFound)
+    console.log(params)
     console.log(params.id)
   return (
     <>
@@ -13,7 +13,7 @@ function UserDetail(props) {
         <p>{userFound.city}</p>
         <p>{userFound.gender}</p>
     </article>
-    <Link to='/'>Return</Link>
+    <Link to='/'><p>aaaa</p></Link>
     </>
     );
 }
